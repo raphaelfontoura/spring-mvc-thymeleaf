@@ -4,6 +4,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import com.rddev.mvc.mudi.model.Pedido;
+import com.rddev.mvc.mudi.model.StatusPedido;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class RequisicaoNovoPedido {
     pedido.setUrlProduto(urlProduto);
     pedido.setUrlImagem(urlImagem);
     pedido.setDescricao(descricao);
+    pedido.setStatus(StatusPedido.AGUARDANDO);
     return pedido;
   }
 
