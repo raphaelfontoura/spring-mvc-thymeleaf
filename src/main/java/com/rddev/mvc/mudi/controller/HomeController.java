@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.rddev.mvc.mudi.model.Pedido;
 import com.rddev.mvc.mudi.repository.PedidoRepository;
@@ -17,12 +18,13 @@ public class HomeController {
   private PedidoRepository repository;
 
   @GetMapping("/home")
-  public String home(Model model) {
+  public ModelAndView home() {
 
     List<Pedido> pedidos = repository.findAll();
+    ModelAndView modelAndView = new ModelAndView("home");
 
-    model.addAttribute("pedidos", pedidos);
+    modelAndView.addObject("pedidos", pedidos);
 
-    return "home";
+    return modelAndView;
   }
 }
