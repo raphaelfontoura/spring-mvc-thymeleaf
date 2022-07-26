@@ -20,10 +20,21 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests((authz) -> authz
+    http.authorizeHttpRequests(authz -> authz
         .anyRequest().authenticated()
       )
-      .httpBasic();
+      .formLogin(form ->
+        form.loginPage("/login")
+          .permitAll()
+          .defaultSuccessUrl("/home")
+      )
+      .logout()
+        .logoutUrl("/logout")
+        .invalidateHttpSession(true)
+        .deleteCookies("JSESSIONID")
+        .permitAll()
+      .and()
+        .csrf().disable();
       
     return http.build();
   }
