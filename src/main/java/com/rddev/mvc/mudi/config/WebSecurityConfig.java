@@ -1,8 +1,13 @@
 
 package com.rddev.mvc.mudi.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -40,18 +47,30 @@ public class WebSecurityConfig {
   }
 
   @Bean
-  public UserDetailsService userDetailsService() {
-
+  public UserDetailsManager users(DataSource dataSource, PasswordEncoder encoder) {
     UserDetails user = 
-      User.withDefaultPasswordEncoder()
+      User.builder()
         .username("raphael")
-        .password("ra1234")
+        .password(encoder.encode("ra1234"))
         .roles("ADM")
         .build();
 
-    return new InMemoryUserDetailsManager(user);
+    UserDetails user2 = 
+      User.builder()
+        .username("joao")
+        .password(encoder.encode("joao"))
+        .roles("ADM")
+        .build();
 
+    JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+    if (! users.userExists(user.getUsername())) users.createUser(user);;
+    if (! users.userExists(user2.getUsername())) users.createUser(user2);;
+    return users;
   }
 
+  @Bean
+  PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
 }
