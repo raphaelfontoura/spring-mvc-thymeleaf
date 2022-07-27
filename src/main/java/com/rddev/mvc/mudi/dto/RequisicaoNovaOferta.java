@@ -3,7 +3,6 @@ package com.rddev.mvc.mudi.dto;
 import com.rddev.mvc.mudi.model.Oferta;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
