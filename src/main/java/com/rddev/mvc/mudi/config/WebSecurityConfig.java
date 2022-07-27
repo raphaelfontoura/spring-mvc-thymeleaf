@@ -22,6 +22,7 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(authz -> authz
+        .antMatchers("/home/**").permitAll()
         .anyRequest().authenticated()
       )
       .formLogin(form ->
@@ -33,6 +34,7 @@ public class WebSecurityConfig {
         .logoutUrl("/logout")
         .invalidateHttpSession(true)
         .deleteCookies("JSESSIONID")
+        .logoutSuccessUrl("/home")
         .permitAll()
       .and()
         .csrf().disable();

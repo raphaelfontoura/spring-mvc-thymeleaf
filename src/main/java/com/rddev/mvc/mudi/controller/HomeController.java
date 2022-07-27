@@ -26,7 +26,7 @@ public class HomeController {
   @GetMapping()
   public ModelAndView home(Principal principal) {
 
-    List<Pedido> pedidos = repository.findAll();
+    List<Pedido> pedidos = repository.findByStatus(StatusPedido.ENTREGUE);
     ModelAndView modelAndView = new ModelAndView("home");
 
     modelAndView.addObject("pedidos", pedidos);
