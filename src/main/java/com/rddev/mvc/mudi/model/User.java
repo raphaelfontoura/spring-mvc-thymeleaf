@@ -10,17 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 @Entity
 @Table(name = "users")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data @ToString(exclude = "pedidos")
 public class User {
   
   @Id
@@ -29,7 +26,7 @@ public class User {
   private Boolean enabled;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
-  @Setter(value = AccessLevel.NONE)
-  private List<Pedido> pedidos = new ArrayList<>();
+  @JsonManagedReference
+  private final List<Pedido> pedidos = new ArrayList<>();
 
 }
