@@ -1,11 +1,13 @@
 package com.rddev.mvc.mudi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -29,7 +31,10 @@ public class Pedido {
   private StatusPedido status;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JsonBackReference
+  @JsonIgnore
   private User user;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido", fetch = FetchType.LAZY)
+  private List<Oferta> ofertas;
 
 }
