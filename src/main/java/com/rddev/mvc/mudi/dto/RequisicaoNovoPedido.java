@@ -1,6 +1,5 @@
 package com.rddev.mvc.mudi.dto;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import com.rddev.mvc.mudi.model.Pedido;
