@@ -16,25 +16,27 @@ import com.rddev.mvc.mudi.model.Pedido;
 import com.rddev.mvc.mudi.model.StatusPedido;
 import com.rddev.mvc.mudi.repository.PedidoRepository;
 
-@Controller
-@RequestMapping("/home")
-public class HomeController {
-  
-  @Autowired
-  private PedidoRepository repository;
+import lombok.RequiredArgsConstructor;
 
-  @GetMapping()
+@Controller
+@RequestMapping("usuario")
+@RequiredArgsConstructor
+public class UsuarioController {
+
+  private final PedidoRepository repository;
+
+  @GetMapping("pedido")
   public ModelAndView home(Principal principal) {
 
-    List<Pedido> pedidos = repository.findAll();
-    ModelAndView modelAndView = new ModelAndView("home");
+    List<Pedido> pedidos = repository.findAllByUserUsername(principal.getName());
+    ModelAndView modelAndView = new ModelAndView("usuario/home");
 
     modelAndView.addObject("pedidos", pedidos);
 
     return modelAndView;
   }
 
-  @GetMapping("/{status}")
+  @GetMapping("pedido/{status}")
   public String porStatus(@PathVariable("status") String status, Model model, Principal principal) {
 
     List<Pedido> pedidos = repository.findByStatusAndUserUsername(StatusPedido.valueOf(status.toUpperCase()), principal.getName());
@@ -42,11 +44,11 @@ public class HomeController {
     model.addAttribute("pedidos", pedidos);
     model.addAttribute("status", status);
 
-    return "home";
+    return "usuario/home";
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
   public String onError() {
-    return "redirect:/home";
+    return "redirect:/usuario/home";
   }
 }

@@ -11,6 +11,8 @@ import com.rddev.mvc.mudi.model.StatusPedido;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long>{
 
-  List<Pedido> findByStatus(StatusPedido status);
+  List<Pedido> findByStatusAndUserUsername(StatusPedido status, String username);
+
+  List<Pedido> findAllByUserUsername(String username);
   
 }

@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class RequisicaoNovoPedido {
   
   @NotBlank // NotBlank.requisicaoNovoPedido.nomeProduto= não pode estar em branco.
-  @Min(3)
   private String nomeProduto;
   @NotBlank
   private String urlProduto;
