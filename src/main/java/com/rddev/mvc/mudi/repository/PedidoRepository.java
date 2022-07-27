@@ -2,6 +2,7 @@ package com.rddev.mvc.mudi.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long>{
 
   List<Pedido> findAllByUserUsername(String username);
 
-  List<Pedido> findByStatus(StatusPedido entregue);
+  List<Pedido> findByStatus(StatusPedido entregue, Pageable pageable);
   
 }
