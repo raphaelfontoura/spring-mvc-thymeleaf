@@ -1,8 +1,9 @@
 package com.rddev.mvc.mudi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -35,6 +36,7 @@ public class Pedido {
   private User user;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido", fetch = FetchType.LAZY)
+  @JsonIgnore
   private List<Oferta> ofertas;
 
 }
