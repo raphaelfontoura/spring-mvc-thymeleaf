@@ -25,32 +25,40 @@
 
           <div class="conteudo col-12 mb-3 col-sm-8">
 
-            <div class="row">
-              <div class="col-md-5">
-                <!-- Valor: <span th:text="${#numbers.formatCurrency(pedido.valorNegociado)}">200,99</span> -->
-                Valor: <input />
-              </div>
-              <div class="col-md-7">
-                Data da entrega: <input />
-              </div>
-            </div>
-
-
             <div> Produto </div>
             <div> <a v-bind:href="pedido.urlProduto"> {{pedido.nomeProduto}} </a> </div>
 
             <div>Descrição</div>
             <div>
-              <textarea class="form-control">
+              <textarea disabled class="form-control">
                 {{pedido.descricao}}
               </textarea>
             </div>
+
+
+            <div class="row mt-5 form-group">
+              <div class="col-md-5">
+                <!-- Valor: <span th:text="${#numbers.formatCurrency(pedido.valorNegociado)}">200,99</span> -->
+                Valor: <input v-model="pedido.valorNegociado" class="form-control" />
+              </div>
+              <div class="col-md-7 form-group">
+                Data da entrega: <input v-model="pedido.dataEntrega" class="form-control" />
+              </div>
+            </div>
+
+            <div class="mt-2 form-group">
+              <label for="comentario">Comentário</label>
+              <textarea name="comentario" class="form-control" v-model="pedido.comentario"></textarea>
+            </div>
+
+            <button v-on:click="enviarOferta(pedido)" class="btn btn-primary mt-2">Enviar Oferta</button>
+
           </div>
 
 
           <div class="imagem col-12 col-sm-4">
             <div>
-              <img class="img-thumbnail" v-bind:src="pedido.urlImagem" src="" alt="">
+              <img class="img-thumbnail" v-bind:src="pedido.urlImagem" />
             </div>
           </div>
 
@@ -73,6 +81,11 @@
             .then(response => (this.pedidos = response.data))
             .catch(err => console.log(err))
             .finally(() => this.loading = false);
+        },
+        methods: {
+          enviarOferta: function(pedido) {
+            console.log(pedido)
+          }
         }
       });
       console.log(pedidos);
